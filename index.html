@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Function Integrator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .content,
+    .examples {
+      margin: 10px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    .examples {
+      width: 250px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    pre {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+
+    .example-item {
+      cursor: pointer;
+      color: #007bff;
+      text-decoration: underline;
+      margin: 5px 0;
+    }
+
+    .example-item:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <h1>Function Integrator</h1>
+      <form id="integration-form" onsubmit="getIntegral(); return false;">
+        <label for="function">Enter a function: </label>
+        <input type="text" id="function" name="function" required>
+        <button type="submit">Integrate</button>
+      </form>
+      <h2>Result:</h2>
+      <pre id="result"></pre>
+    </div>
+    <div class="examples">
+      <h2>Examples</h2>
+      <div class="example-item" onclick="setExample('x^2 + 3*x + 2')">x^2 + 3*x + 2</div>
+      <div class="example-item" onclick="setExample('sin(x)')">sin(x)</div>
+      <div class="example-item" onclick="setExample('e^x')">e^x</div>
+      <div class="example-item" onclick="setExample('(x + 3)^3 / (2 * x)')">(x + 3)^3 / (2 * x)</div>
+      <div class="example-item" onclick="setExample('log(x)')">log(x)</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/algebrite@1.4.0/dist/algebrite.bundle-for-browser.min.js"></script>
+  <script>
+    function getIntegral() {
+      const functionInput = document.getElementById('function').value;
+      try {
+        const integral = Algebrite.integral(functionInput).toString();
+        document.getElementById('result').innerText = integral;
+      } catch (error) {
+        document.getElementById('result').innerText = 'Error: ' + error.message;
+      }
+      return false
+    }
+
+    function setExample(eq) {
+      document.getElementById('function').value = eq;
+      getIntegral();
+    }
+  </script>
+</body>
+
+</html>
